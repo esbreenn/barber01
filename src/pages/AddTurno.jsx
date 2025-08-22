@@ -1,7 +1,7 @@
 // src/pages/AddTurno.jsx
 
 import React, { useState } from 'react';
-import { addTurno, findTurnoByDate } from '../services/dataService';
+import { addTurno, findTurnoByDate } from '../services/turnoService';
 import { serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import TurnoForm from '../components/TurnoForm';
