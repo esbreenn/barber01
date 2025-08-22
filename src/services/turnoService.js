@@ -13,7 +13,6 @@ import {
 import { db } from './firebase';
 
 const TURNOS_COLLECTION = 'turnos';
-const PRODUCT_SALES_COLLECTION = 'productSales';
 
 // Subscribe to turnos collection
 export function subscribeTurnos(callback) {
@@ -56,22 +55,6 @@ export async function findTurnoByDate(fecha, hora) {
   );
   const snapshot = await getDocs(q);
   return snapshot.docs.length ? { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } : null;
-}
-
-// Subscribe to product sales collection
-export function subscribeProductSales(callback) {
-  const colRef = collection(db, PRODUCT_SALES_COLLECTION);
-  const unsubscribe = onSnapshot(colRef, (snapshot) => {
-    const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-    callback(data);
-  });
-  return unsubscribe;
-}
-
-// Add a product sale record
-export async function addProductSale(sale) {
-  const docRef = await addDoc(collection(db, PRODUCT_SALES_COLLECTION), sale);
-  return { id: docRef.id, ...sale };
 }
 
 // Retrieve all turnos once

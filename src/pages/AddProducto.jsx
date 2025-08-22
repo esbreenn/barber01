@@ -1,7 +1,7 @@
 // src/pages/AddProducto.jsx
 
 import React, { useState } from 'react';
-import { addProductSale } from '../services/dataService';
+import { addProductSale } from '../services/ventaService';
 import { serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';

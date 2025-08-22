@@ -11,15 +11,6 @@ Currently, two official plugins are available:
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 
-## Variables de entorno
+## Configuración de Firebase
 
-Este proyecto utiliza Firebase. Crea un archivo `.env` en la raíz del proyecto a partir de `.env.example` y define las siguientes variables:
-
-- `VITE_FIREBASE_API_KEY`
-- `VITE_FIREBASE_AUTH_DOMAIN`
-- `VITE_FIREBASE_PROJECT_ID`
-- `VITE_FIREBASE_STORAGE_BUCKET`
-- `VITE_FIREBASE_MESSAGING_SENDER_ID`
-- `VITE_FIREBASE_APP_ID`
-
-Estos valores configuran el SDK de Firebase para la autenticación y el acceso a Firestore.
+El proyecto incluye una configuración de Firebase con los parámetros necesarios para la autenticación y el acceso a Firestore directamente en el código.

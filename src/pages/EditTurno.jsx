@@ -1,7 +1,7 @@
 // src/pages/EditTurno.jsx
 
 import React, { useState, useEffect } from 'react';
-import { getTurno, updateTurno, findTurnoByDate } from '../services/dataService';
+import { getTurno, updateTurno, findTurnoByDate } from '../services/turnoService';
 import { useParams, useNavigate } from 'react-router-dom';
 import TurnoForm from '../components/TurnoForm';
 import toast from 'react-hot-toast';
