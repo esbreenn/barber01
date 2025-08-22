@@ -1,7 +1,8 @@
 // src/pages/Finances.jsx
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { subscribeTurnos, subscribeProductSales } from '../services/dataService';
+import { subscribeTurnos } from '../services/turnoService';
+import { subscribeProductSales } from '../services/ventaService';
 import { formatCurrency } from '../utils/formatCurrency';
 
 function parseYearMonth(fecha) {
