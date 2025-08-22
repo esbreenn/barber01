@@ -1,8 +1,7 @@
 // src/pages/AddTurno.jsx
 
 import React, { useState } from 'react';
-import { collection, addDoc, Timestamp, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { addTurno, findTurnoByDate } from '../services/dataService';
 import { useNavigate } from 'react-router-dom';
 import TurnoForm from '../components/TurnoForm';
 import toast from 'react-hot-toast';
@@ -53,15 +52,8 @@ function AddTurno() {
     setLoading(true);
 
     try {
-      const q = query(
-        collection(db, "turnos"),
-        where("fecha", "==", turno.fecha),
-        where("hora", "==", turno.hora)
-      );
-      
-      const querySnapshot = await getDocs(q);
-
-      if (!querySnapshot.empty) {
+      const existing = await findTurnoByDate(turno.fecha, turno.hora);
+      if (existing) {
         toast.error("Este horario ya está ocupado. Por favor, elige otro.");
         setLoading(false);
         return;
@@ -69,13 +61,9 @@ function AddTurno() {
 
       // El precio ya está actualizado en el estado por handleChange.
       // Aseguramos que se guarde como número.
-      const precioNumerico = parseFloat(turno.precio); 
+      const precioNumerico = parseFloat(turno.precio);
 
-      // Guardamos el turno con el precio (ya calculado)
-      await addDoc(
-        collection(db, "turnos"),
-        { ...turno, precio: precioNumerico, creado: Timestamp.now() }
-      );
+      await addTurno({ ...turno, precio: precioNumerico, creado: new Date().toISOString() });
       toast.success('Turno guardado con éxito');
       navigate('/');
 

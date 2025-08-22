@@ -11,8 +11,7 @@ import AddProducto from "./pages/AddProducto";
 
 import Navbar from "./components/Navbar";
 
-import { auth } from "./firebase/config";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged } from "./services/authService";
 
 function PrivateRoute({ user, children }) {
   if (user === undefined) {
@@ -31,7 +30,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState(undefined);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged((user) => {
       setCurrentUser(user);
     });
     return () => unsubscribe();

@@ -1,8 +1,7 @@
 // src/pages/Login.jsx
 
 import React, { useState } from 'react';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../firebase/config';
+import { login } from '../services/authService';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast'; // Asegúrate de tenerlo importado
 
@@ -24,7 +23,7 @@ function Login() {
         return; // Detener la ejecución de la función
       }
 
-      await signInWithEmailAndPassword(auth, email, password);
+      await login(email, password);
       navigate('/'); // Redirigir a la página principal tras un login exitoso
     } catch (err) {
       console.error("Error en handleLogin:", err);
