@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { addTurno, findTurnoByDate } from '../services/dataService';
+import { serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import TurnoForm from '../components/TurnoForm';
 import toast from 'react-hot-toast';
@@ -63,7 +64,7 @@ function AddTurno() {
       // Aseguramos que se guarde como número.
       const precioNumerico = parseFloat(turno.precio);
 
-      await addTurno({ ...turno, precio: precioNumerico, creado: new Date().toISOString() });
+      await addTurno({ ...turno, precio: precioNumerico, creado: serverTimestamp() });
       toast.success('Turno guardado con éxito');
       navigate('/');
 

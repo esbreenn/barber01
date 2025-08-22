@@ -1,58 +1,81 @@
-// In-memory data service replacing Firebase Firestore
-let turnos = [];
-let productSales = [];
+import {
+  collection,
+  addDoc,
+  onSnapshot,
+  doc,
+  getDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore';
+import { db } from './firebase';
 
+const TURNOS_COLLECTION = 'turnos';
+const PRODUCT_SALES_COLLECTION = 'productSales';
+
+// Subscribe to turnos collection
 export function subscribeTurnos(callback) {
-  callback([...turnos]);
-  return () => {};
-}
-
-export function addTurno(turno) {
-  return new Promise((resolve) => {
-    const newTurno = { ...turno, id: Date.now().toString() };
-    turnos.push(newTurno);
-    resolve(newTurno);
+  const colRef = collection(db, TURNOS_COLLECTION);
+  const unsubscribe = onSnapshot(colRef, (snapshot) => {
+    const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+    callback(data);
   });
+  return unsubscribe;
 }
 
-export function getTurno(id) {
-  return Promise.resolve(turnos.find(t => t.id === id) || null);
+// Add new turno
+export async function addTurno(turno) {
+  const docRef = await addDoc(collection(db, TURNOS_COLLECTION), turno);
+  return { id: docRef.id, ...turno };
 }
 
+// Get turno by id
+export async function getTurno(id) {
+  const snap = await getDoc(doc(db, TURNOS_COLLECTION, id));
+  return snap.exists() ? { id: snap.id, ...snap.data() } : null;
+}
+
+// Update turno
 export function updateTurno(id, data) {
-  return new Promise((resolve) => {
-    const idx = turnos.findIndex(t => t.id === id);
-    if (idx !== -1) {
-      turnos[idx] = { ...turnos[idx], ...data };
-    }
-    resolve();
-  });
+  return updateDoc(doc(db, TURNOS_COLLECTION, id), data);
 }
 
+// Delete turno
 export function deleteTurno(id) {
-  return new Promise((resolve) => {
-    turnos = turnos.filter(t => t.id !== id);
-    resolve();
-  });
+  return deleteDoc(doc(db, TURNOS_COLLECTION, id));
 }
 
-export function findTurnoByDate(fecha, hora) {
-  return Promise.resolve(turnos.find(t => t.fecha === fecha && t.hora === hora) || null);
+// Find turno by date and time
+export async function findTurnoByDate(fecha, hora) {
+  const q = query(
+    collection(db, TURNOS_COLLECTION),
+    where('fecha', '==', fecha),
+    where('hora', '==', hora)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.length ? { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } : null;
 }
 
+// Subscribe to product sales collection
 export function subscribeProductSales(callback) {
-  callback([...productSales]);
-  return () => {};
-}
-
-export function addProductSale(sale) {
-  return new Promise((resolve) => {
-    const newSale = { ...sale, id: Date.now().toString() };
-    productSales.push(newSale);
-    resolve(newSale);
+  const colRef = collection(db, PRODUCT_SALES_COLLECTION);
+  const unsubscribe = onSnapshot(colRef, (snapshot) => {
+    const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+    callback(data);
   });
+  return unsubscribe;
 }
 
-export function getAllTurnos() {
-  return turnos;
+// Add a product sale record
+export async function addProductSale(sale) {
+  const docRef = await addDoc(collection(db, PRODUCT_SALES_COLLECTION), sale);
+  return { id: docRef.id, ...sale };
+}
+
+// Retrieve all turnos once
+export async function getAllTurnos() {
+  const snapshot = await getDocs(collection(db, TURNOS_COLLECTION));
+  return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
 }

@@ -1,32 +1,22 @@
-// Simple local authentication service
-let currentUser = null;
+import { signInWithEmailAndPassword, signOut, onAuthStateChanged as onAuthChanged } from 'firebase/auth';
+import { auth } from './firebase';
 
-const VALID_EMAIL = 'admin@example.com';
-const VALID_PASSWORD = 'password123';
-
+// Sign in user with email and password
 export function login(email, password) {
-  return new Promise((resolve, reject) => {
-    if (email === VALID_EMAIL && password === VALID_PASSWORD) {
-      currentUser = { email };
-      resolve(currentUser);
-    } else {
-      reject(new Error('Credenciales inválidas'));
-    }
-  });
+  return signInWithEmailAndPassword(auth, email, password).then(cred => cred.user);
 }
 
+// Sign out current user
 export function logout() {
-  return new Promise((resolve) => {
-    currentUser = null;
-    resolve();
-  });
+  return signOut(auth);
 }
 
+// Listen to auth state changes
 export function onAuthStateChanged(callback) {
-  callback(currentUser);
-  return () => {};
+  return onAuthChanged(auth, callback);
 }
 
+// Get current logged user
 export function getCurrentUser() {
-  return currentUser;
+  return auth.currentUser;
 }

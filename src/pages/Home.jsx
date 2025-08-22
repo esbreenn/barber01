@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useMemo } from "react";
 import { subscribeTurnos, deleteTurno } from "../services/dataService";
-import { getCurrentUser } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import CalendarView from "../components/CalendarView";
 import TurnoList from "../components/TurnoList";
@@ -12,16 +11,10 @@ import { formatCurrency } from "../utils/formatCurrency";
 function Home() {
   const [allTurnos, setAllTurnos] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [selectedDate, setSelectedDate] = useState(new Date()); // selectedDate por defecto es la fecha actual
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!getCurrentUser()) {
-      setError("Debes iniciar sesión para ver los turnos.");
-      setLoading(false);
-      return;
-    }
     const unsubscribe = subscribeTurnos((data) => {
       setAllTurnos(data);
       setLoading(false);
@@ -105,7 +98,6 @@ function Home() {
   };
 
   if (loading) return <div className="text-center mt-5"><div className="spinner-border text-primary"></div></div>;
-  if (error) return <div className="alert alert-danger text-center mt-5">{error}</div>;
 
   return (
     <div className="container mt-4">
