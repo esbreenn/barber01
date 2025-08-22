@@ -1,19 +1,13 @@
 // src/pages/Finances.jsx
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { collection, onSnapshot, query, orderBy, Timestamp } from 'firebase/firestore';
-import { db, auth } from '../firebase/config';
+import { subscribeTurnos, subscribeProductSales } from '../services/dataService';
+import { getCurrentUser } from '../services/authService';
 import { formatCurrency } from '../utils/formatCurrency';
 
 function parseYearMonth(fecha) {
-    if (typeof fecha === 'string') {
-        return fecha.split('-').map(Number);
-    }
-    if (fecha instanceof Timestamp) {
-        const date = fecha.toDate();
-        return [date.getFullYear(), date.getMonth() + 1];
-    }
-    return [NaN, NaN];
+    const date = new Date(fecha);
+    return [date.getFullYear(), date.getMonth() + 1];
 }
 
 function Finances() {
@@ -34,53 +28,29 @@ function Finances() {
     }, [allProductSales]);
 
     useEffect(() => {
-        if (!auth.currentUser) {
+        if (!getCurrentUser()) {
             setError('Debes iniciar sesión para ver los datos de finanzas.');
             setLoadingTurnos(false);
             return;
         }
-
-        const q = query(collection(db, "turnos"), orderBy("fecha", "asc"));
-
-        const unsubscribe = onSnapshot(
-            q,
-            (snapshot) => {
-                const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-                setAllTurnos(data);
-                setLoadingTurnos(false);
-            },
-            (err) => {
-                console.error("Error al obtener turnos para finanzas:", err);
-                setError(err.code === 'permission-denied' ? 'No tienes permisos para ver los datos.' : 'Error al cargar los datos de finanzas.');
-                setLoadingTurnos(false);
-            }
-        );
+        const unsubscribe = subscribeTurnos((data) => {
+            setAllTurnos(data);
+            setLoadingTurnos(false);
+        });
 
         return () => unsubscribe();
     }, []);
 
     useEffect(() => {
-        if (!auth.currentUser) {
+        if (!getCurrentUser()) {
             setError('Debes iniciar sesión para ver los datos de finanzas.');
             setLoadingProducts(false);
             return;
         }
-
-        const q = query(collection(db, 'productSales'), orderBy('fecha', 'asc'));
-
-        const unsubscribe = onSnapshot(
-            q,
-            (snapshot) => {
-                const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-                setAllProductSales(data);
-                setLoadingProducts(false);
-            },
-            (err) => {
-                console.error('Error al obtener ventas de productos:', err);
-                setError(err.code === 'permission-denied' ? 'No tienes permisos para ver los datos.' : 'Error al cargar los datos de finanzas.');
-                setLoadingProducts(false);
-            }
-        );
+        const unsubscribe = subscribeProductSales((data) => {
+            setAllProductSales(data);
+            setLoadingProducts(false);
+        });
 
         return () => unsubscribe();
     }, []);
@@ -251,7 +221,7 @@ function Finances() {
                             <tbody>
                                 {turnosDelMesFiltrados.map((turno) => (
                                     <tr key={turno.id}>
-                                        <td>{turno.fecha instanceof Timestamp ? turno.fecha.toDate().toISOString().split('T')[0] : turno.fecha}</td>
+                                          <td>{turno.fecha}</td>
                                         <td>{turno.hora}</td>
                                         <td>{turno.nombre}</td>
                                         <td>{turno.servicio || 'N/A'}</td>
@@ -283,7 +253,7 @@ function Finances() {
                             <tbody>
                                 {ventasDelMesFiltradas.map((venta) => (
                                     <tr key={venta.id}>
-                                        <td>{venta.fecha instanceof Timestamp ? venta.fecha.toDate().toISOString().split('T')[0] : venta.fecha}</td>
+                                          <td>{venta.fecha}</td>
                                         <td>{venta.nombre}</td>
                                         <td>{venta.categoria || 'N/A'}</td>
                                         <td>{formatCurrency(venta.costo || 0)}</td>

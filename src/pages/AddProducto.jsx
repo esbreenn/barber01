@@ -1,8 +1,7 @@
 // src/pages/AddProducto.jsx
 
 import React, { useState } from 'react';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { addProductSale } from '../services/dataService';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import ProductoForm from '../components/ProductoForm';
@@ -40,13 +39,13 @@ function AddProducto() {
     setLoading(true);
 
     try {
-      await addDoc(collection(db, 'productSales'), {
+      await addProductSale({
         nombre: producto.nombre,
         costo: Number(producto.costo),
         precioVenta: Number(producto.precioVenta),
-        fecha: Timestamp.fromDate(new Date(producto.fecha)),
+        fecha: producto.fecha,
         categoria: producto.categoria || null,
-        creado: Timestamp.now(),
+        creado: new Date().toISOString(),
       });
       toast.success('Venta registrada con éxito');
       navigate('/');

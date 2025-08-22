@@ -1,8 +1,7 @@
 // src/pages/EditTurno.jsx
 
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { getTurno, updateTurno, findTurnoByDate } from '../services/dataService';
 import { useParams, useNavigate } from 'react-router-dom';
 import TurnoForm from '../components/TurnoForm';
 import toast from 'react-hot-toast';
@@ -19,9 +18,9 @@ function EditTurno() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const turnoDoc = await getDoc(doc(db, 'turnos', id));
-        if (turnoDoc.exists()) {
-          const data = turnoDoc.data();
+        const turnoDoc = await getTurno(id);
+        if (turnoDoc) {
+          const data = turnoDoc;
           setTurno({
             id: turnoDoc.id,
             nombre: data.nombre || '',
@@ -75,36 +74,18 @@ function EditTurno() {
     setIsSaving(true);
     
     try {
-      const q = query(
-        collection(db, "turnos"),
-        where("fecha", "==", turno.fecha),
-        where("hora", "==", turno.hora)
-      );
-
-      const querySnapshot = await getDocs(q);
-      let isOccupied = false;
-      
-      querySnapshot.forEach((doc) => {
-        if (doc.id !== id) { 
-          isOccupied = true;
-        }
-      });
-
-      if (isOccupied) {
+      const existing = await findTurnoByDate(turno.fecha, turno.hora);
+      if (existing && existing.id !== id) {
         toast.error("Este horario ya está ocupado por otro turno.");
         setIsSaving(false);
         return;
       }
 
-      // El precio ya está actualizado en el estado por handleChange o cargado de la DB.
-      // Aseguramos que se guarde como número.
-      const precioNumerico = parseFloat(turno.precio); 
+      const precioNumerico = parseFloat(turno.precio);
 
-      const { id: turnoId, ...dataToUpdate } = turno; // Extraemos el ID
-      const turnoDocRef = doc(db, 'turnos', turnoId);
-      // Actualizamos el documento con los nuevos datos y el precio convertido
-      await updateDoc(turnoDocRef, { ...dataToUpdate, precio: precioNumerico });
-      
+      const { id: turnoId, ...dataToUpdate } = turno;
+      await updateTurno(turnoId, { ...dataToUpdate, precio: precioNumerico });
+
       toast.success('Turno actualizado con éxito');
       navigate('/');
 

@@ -1,11 +1,8 @@
-import { collection, getDocs, updateDoc, doc, deleteField } from 'firebase/firestore';
-import { db } from '../src/firebase/config.js';
+import { getAllTurnos, updateTurno } from '../src/services/dataService.js';
 
 async function removeCompletado() {
-  const snapshot = await getDocs(collection(db, 'turnos'));
-  const updates = snapshot.docs.map(d => updateDoc(doc(db, 'turnos', d.id), {
-    completado: deleteField()
-  }));
+  const turnos = getAllTurnos();
+  const updates = turnos.map(t => updateTurno(t.id, { completado: undefined }));
   await Promise.all(updates);
   console.log('Propiedad "completado" eliminada de todos los turnos.');
 }

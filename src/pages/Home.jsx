@@ -1,8 +1,8 @@
 // src/pages/Home.jsx
 
 import React, { useEffect, useState, useMemo } from "react";
-import { collection, onSnapshot, query, orderBy, deleteDoc, doc } from "firebase/firestore";
-import { db, auth } from "../firebase/config";
+import { subscribeTurnos, deleteTurno } from "../services/dataService";
+import { getCurrentUser } from "../services/authService";
 import { useNavigate } from "react-router-dom";
 import CalendarView from "../components/CalendarView";
 import TurnoList from "../components/TurnoList";
@@ -17,26 +17,15 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth.currentUser) {
+    if (!getCurrentUser()) {
       setError("Debes iniciar sesión para ver los turnos.");
       setLoading(false);
       return;
     }
-
-    const q = query(collection(db, "turnos"), orderBy("fecha", "asc"), orderBy("hora", "asc"));
-    const unsubscribe = onSnapshot(
-      q,
-      (snapshot) => {
-        const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-        setAllTurnos(data);
-        setLoading(false);
-      },
-      (err) => {
-        console.error("Error al obtener turnos en tiempo real:", err);
-        setError(err.code === 'permission-denied' ? "No tienes permisos para ver los turnos." : "Error al cargar los turnos.");
-        setLoading(false);
-      }
-    );
+    const unsubscribe = subscribeTurnos((data) => {
+      setAllTurnos(data);
+      setLoading(false);
+    });
     return () => unsubscribe();
   }, []);
 
@@ -98,8 +87,8 @@ function Home() {
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de que quieres eliminar este turno?")) {
-      const promise = deleteDoc(doc(db, "turnos", id));
-      
+      const promise = deleteTurno(id);
+
       toast.promise(promise, {
         loading: 'Eliminando turno...',
         success: 'Turno eliminado con éxito',

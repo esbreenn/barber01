@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getAuth, signOut } from 'firebase/auth';
+import { logout } from '../services/authService';
 import {
   FaHome,
   FaPlusCircle,
@@ -13,11 +13,9 @@ import {
 
 function Navbar({ currentUser }) {
   const navigate = useNavigate();
-  const auth = getAuth();
-
   const handleLogout = async () => {
     try {
-      await signOut(auth);
+      await logout();
       navigate('/login');
     } catch (error) {
       console.error('Error al cerrar sesión:', error);
