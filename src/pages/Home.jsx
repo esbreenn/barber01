@@ -1,7 +1,7 @@
 // src/pages/Home.jsx
 
 import React, { useEffect, useState, useMemo } from "react";
-import { subscribeTurnos, deleteTurno } from "../services/dataService";
+import { subscribeTurnos, deleteTurno } from "../services/turnoService";
 import { useNavigate } from "react-router-dom";
 import CalendarView from "../components/CalendarView";
 import TurnoList from "../components/TurnoList";
