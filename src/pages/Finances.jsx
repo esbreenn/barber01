@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { subscribeTurnos, subscribeProductSales } from '../services/dataService';
-import { getCurrentUser } from '../services/authService';
 import { formatCurrency } from '../utils/formatCurrency';
 
 function parseYearMonth(fecha) {
@@ -15,8 +14,6 @@ function Finances() {
     const [allProductSales, setAllProductSales] = useState([]);
     const [loadingTurnos, setLoadingTurnos] = useState(true);
     const [loadingProducts, setLoadingProducts] = useState(true);
-    const [error, setError] = useState(null);
-
     const today = new Date();
     const [selectedMonth, setSelectedMonth] = useState(today.getMonth() + 1);
     const [selectedYear, setSelectedYear] = useState(today.getFullYear());
@@ -28,30 +25,18 @@ function Finances() {
     }, [allProductSales]);
 
     useEffect(() => {
-        if (!getCurrentUser()) {
-            setError('Debes iniciar sesión para ver los datos de finanzas.');
-            setLoadingTurnos(false);
-            return;
-        }
         const unsubscribe = subscribeTurnos((data) => {
             setAllTurnos(data);
             setLoadingTurnos(false);
         });
-
         return () => unsubscribe();
     }, []);
 
     useEffect(() => {
-        if (!getCurrentUser()) {
-            setError('Debes iniciar sesión para ver los datos de finanzas.');
-            setLoadingProducts(false);
-            return;
-        }
         const unsubscribe = subscribeProductSales((data) => {
             setAllProductSales(data);
             setLoadingProducts(false);
         });
-
         return () => unsubscribe();
     }, []);
 
@@ -139,7 +124,6 @@ function Finances() {
             </div>
         );
     }
-    if (error) return <div className="alert alert-danger text-center mt-5">{error}</div>;
 
     return (
         <div className="container mt-4" style={{ maxWidth: '800px' }}>

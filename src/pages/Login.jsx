@@ -23,8 +23,10 @@ function Login() {
         return; // Detener la ejecución de la función
       }
 
-      await login(email, password);
-      navigate('/'); // Redirigir a la página principal tras un login exitoso
+      const user = await login(email, password);
+      if (user) {
+        navigate('/'); // Redirigir tras un login exitoso
+      }
     } catch (err) {
       console.error("Error en handleLogin:", err);
       // Mensaje de error genérico para email/contraseña incorrectos

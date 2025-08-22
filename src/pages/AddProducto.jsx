@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { addProductSale } from '../services/dataService';
+import { serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import ProductoForm from '../components/ProductoForm';
@@ -45,7 +46,7 @@ function AddProducto() {
         precioVenta: Number(producto.precioVenta),
         fecha: producto.fecha,
         categoria: producto.categoria || null,
-        creado: new Date().toISOString(),
+        creado: serverTimestamp(),
       });
       toast.success('Venta registrada con éxito');
       navigate('/');
