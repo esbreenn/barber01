@@ -5,22 +5,10 @@ import {
   getDoc,
   updateDoc,
   deleteDoc,
-  getDocs,
-  onSnapshot,
 } from 'firebase/firestore';
 import { db } from './firebase';
 
 const USERS_COLLECTION = 'users';
-
-// Subscribe to users collection
-export function subscribeUsers(callback) {
-  const colRef = collection(db, USERS_COLLECTION);
-  const unsubscribe = onSnapshot(colRef, (snapshot) => {
-    const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-    callback(data);
-  });
-  return unsubscribe;
-}
 
 // Add a new user document
 export async function addUser(user) {
@@ -44,8 +32,3 @@ export function deleteUser(id) {
   return deleteDoc(doc(db, USERS_COLLECTION, id));
 }
 
-// Retrieve all users once
-export async function getAllUsers() {
-  const snapshot = await getDocs(collection(db, USERS_COLLECTION));
-  return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
-}
