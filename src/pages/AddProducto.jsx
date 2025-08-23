@@ -6,7 +6,6 @@ import { serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import ProductoForm from '../components/ProductoForm';
-import { auth } from '../services/firebase';
 
 const initialState = {
   nombre: '',
@@ -41,8 +40,7 @@ function AddProducto() {
     setLoading(true);
 
     try {
-      const uid = auth.currentUser.uid;
-      await addProductSale(uid, {
+      await addProductSale({
         nombre: producto.nombre,
         costo: Number(producto.costo),
         precioVenta: Number(producto.precioVenta),

@@ -4,7 +4,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { subscribeTurnos } from '../services/turnoService';
 import { subscribeProductSales } from '../services/ventaService';
 import { formatCurrency } from '../utils/formatCurrency';
-import { auth } from '../services/firebase';
 
 function parseYearMonth(fecha) {
     const date = new Date(fecha);
@@ -27,8 +26,7 @@ function Finances() {
     }, [allProductSales]);
 
     useEffect(() => {
-        const uid = auth.currentUser.uid;
-        const unsubscribe = subscribeTurnos(uid, (data) => {
+        const unsubscribe = subscribeTurnos((data) => {
             setAllTurnos(data);
             setLoadingTurnos(false);
         });
@@ -36,8 +34,7 @@ function Finances() {
     }, []);
 
     useEffect(() => {
-        const uid = auth.currentUser.uid;
-        const unsubscribe = subscribeProductSales(uid, (data) => {
+        const unsubscribe = subscribeProductSales((data) => {
             setAllProductSales(data);
             setLoadingProducts(false);
         });
