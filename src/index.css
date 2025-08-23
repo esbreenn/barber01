@@ -68,6 +68,18 @@ body {
   border: 1px solid var(--color-border);
 }
 
+.theme-list {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+.theme-list-item {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
 .text-secondary {
   color: var(--color-text-secondary) !important;
 }
