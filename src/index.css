@@ -108,6 +108,14 @@ body {
 .app-navbar .nav-buttons, .app-navbar .user-actions { display: flex; align-items: center; gap: 10px; }
 .app-navbar .welcome-text { font-size: 0.9em; color: var(--color-text-secondary); margin-right: 10px; }
 
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--color-text-primary);
+  font-size: 1.5rem;
+}
+
 /* 5. SECCIÓN DE CALENDARIO (REACT-DAY-PICKER) */
 /* El estilo base ya viene de 'react-day-picker/dist/style.css' */
 /* No eliminamos la línea de importación de react-calendar/dist/Calendar.css, la reemplazamos por la de react-day-picker*/
@@ -176,23 +184,29 @@ body {
 @media (max-width: 767.98px) {
   .app-navbar {
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
   }
-  .app-navbar .nav-buttons,
-  .app-navbar .user-actions {
-    justify-content: center;
-    width: 100%;
+  .app-navbar .menu-toggle {
+    display: block;
   }
   .app-navbar .nav-buttons {
-    flex-wrap: wrap;
+    display: none;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 10px;
+  }
+  .app-navbar .nav-buttons.show {
+    display: flex;
   }
   .app-navbar .nav-buttons .btn-nav {
-    flex: 1 1 calc(50% - 10px);
+    width: 100%;
   }
   .app-navbar .user-actions {
+    width: 100%;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    margin-top: 10px;
   }
   .app-navbar .user-actions .welcome-text {
     margin-right: 0;
