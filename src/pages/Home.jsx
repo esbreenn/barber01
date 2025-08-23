@@ -7,20 +7,23 @@ import CalendarView from "../components/CalendarView";
 import TurnoList from "../components/TurnoList";
 import toast from 'react-hot-toast';
 import { formatCurrency } from "../utils/formatCurrency";
+import { getCurrentUser } from "../services/authService";
 
 function Home() {
   const [allTurnos, setAllTurnos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date()); // selectedDate por defecto es la fecha actual
   const navigate = useNavigate();
+  const currentUser = getCurrentUser();
 
   useEffect(() => {
-    const unsubscribe = subscribeTurnos((data) => {
+    if (!currentUser) return;
+    const unsubscribe = subscribeTurnos(currentUser.uid, (data) => {
       setAllTurnos(data);
       setLoading(false);
     });
     return () => unsubscribe();
-  }, []);
+  }, [currentUser]);
 
   const filteredTurnos = useMemo(() => {
     if (!selectedDate) return [];
@@ -80,7 +83,7 @@ function Home() {
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de que quieres eliminar este turno?")) {
-      const promise = deleteTurno(id);
+      const promise = deleteTurno(currentUser.uid, id);
 
       toast.promise(promise, {
         loading: 'Eliminando turno...',

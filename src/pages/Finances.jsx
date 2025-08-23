@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { subscribeTurnos } from '../services/turnoService';
 import { subscribeProductSales } from '../services/ventaService';
 import { formatCurrency } from '../utils/formatCurrency';
+import { getCurrentUser } from '../services/authService';
 
 function parseYearMonth(fecha) {
     const date = new Date(fecha);
@@ -19,6 +20,7 @@ function Finances() {
     const [selectedMonth, setSelectedMonth] = useState(today.getMonth() + 1);
     const [selectedYear, setSelectedYear] = useState(today.getFullYear());
     const [selectedCategory, setSelectedCategory] = useState('');
+    const currentUser = getCurrentUser();
 
     const productCategories = useMemo(() => {
         const categories = allProductSales.map((venta) => venta.categoria).filter(Boolean);
@@ -26,12 +28,13 @@ function Finances() {
     }, [allProductSales]);
 
     useEffect(() => {
-        const unsubscribe = subscribeTurnos((data) => {
+        if (!currentUser) return;
+        const unsubscribe = subscribeTurnos(currentUser.uid, (data) => {
             setAllTurnos(data);
             setLoadingTurnos(false);
         });
         return () => unsubscribe();
-    }, []);
+    }, [currentUser]);
 
     useEffect(() => {
         const unsubscribe = subscribeProductSales((data) => {
