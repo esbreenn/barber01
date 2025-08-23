@@ -45,3 +45,7 @@ npm test
 ```
 
 Esto ejecutará la suite de pruebas con Vitest.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
