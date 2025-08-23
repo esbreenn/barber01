@@ -10,6 +10,7 @@ import {
   FaShoppingBag,
   FaSignOutAlt,
   FaCut,
+  FaUsers,
 } from 'react-icons/fa';
 
 function Navbar({ currentUser }) {
@@ -41,6 +42,9 @@ function Navbar({ currentUser }) {
         </Link>
         <Link to="/servicios" className="btn btn-nav nav-services">
           <FaCut className="me-1" /> Servicios
+        </Link>
+        <Link to="/clientes" className="btn btn-nav nav-clients">
+          <FaUsers className="me-1" /> Clientes
         </Link>
       </div>
       <div className="user-actions">

@@ -24,6 +24,8 @@ function EditTurno() {
           setTurno({
             id: turnoDoc.id,
             nombre: data.nombre || '',
+            telefono: data.telefono || '',
+            notas: data.notas || '',
             fecha: data.fecha || '',
             hora: data.hora || '',
             servicio: data.servicio || '',

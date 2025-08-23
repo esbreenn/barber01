@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Finances from "./pages/Finances";
 import AddProducto from "./pages/AddProducto";
 import ServicesPanel from "./pages/ServicesPanel";
+import Clients from "./pages/Clients";
 
 import Navbar from "./components/Navbar";
 
@@ -57,6 +58,10 @@ function App() {
           <Route
             path="/servicios"
             element={<PrivateRoute user={currentUser}><ServicesPanel /></PrivateRoute>}
+          />
+          <Route
+            path="/clientes"
+            element={<PrivateRoute user={currentUser}><Clients /></PrivateRoute>}
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

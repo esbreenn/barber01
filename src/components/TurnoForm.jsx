@@ -4,7 +4,8 @@ import React from 'react';
 
 function TurnoForm({ turnoData, onFormChange, onSubmit, isSaving, submitText, services = [] }) {
   // Desestructuramos todos los campos, incluido "precio" para el input numérico.
-  const { nombre, fecha, hora, servicio, precio } = turnoData;
+  // NUEVO: añadimos teléfono y notas al formulario de turnos.
+  const { nombre, telefono, notas, fecha, hora, servicio, precio } = turnoData;
 
   return (
     <>
@@ -19,6 +20,17 @@ function TurnoForm({ turnoData, onFormChange, onSubmit, isSaving, submitText, se
           value={nombre}
           onChange={onFormChange}
           required
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="telefono" className="form-label">Teléfono</label>
+        <input
+          type="tel"
+          className="form-control"
+          id="telefono"
+          name="telefono"
+          value={telefono}
+          onChange={onFormChange}
         />
       </div>
       <div className="mb-3">
@@ -75,6 +87,18 @@ function TurnoForm({ turnoData, onFormChange, onSubmit, isSaving, submitText, se
           value={precio}
           onChange={onFormChange}
           required
+        />
+      </div>
+
+      <div className="mb-3">
+        <label htmlFor="notas" className="form-label">Notas</label>
+        <textarea
+          className="form-control"
+          id="notas"
+          name="notas"
+          value={notas}
+          onChange={onFormChange}
+          rows={3}
         />
       </div>
 
