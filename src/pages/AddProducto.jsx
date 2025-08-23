@@ -52,7 +52,11 @@ function AddProducto() {
       navigate('/');
     } catch (err) {
       console.error('Error al registrar la venta:', err);
-      toast.error('Hubo un error al guardar la venta.');
+      if (err.message === 'No authenticated user') {
+        navigate('/login');
+      } else {
+        toast.error('Hubo un error al guardar la venta.');
+      }
     } finally {
       setLoading(false);
     }
