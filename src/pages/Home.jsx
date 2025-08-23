@@ -1,6 +1,6 @@
 // src/pages/Home.jsx
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useRef } from "react";
 import { subscribeTurnos, deleteTurno } from "../services/turnoService";
 import { useNavigate } from "react-router-dom";
 import CalendarView from "../components/CalendarView";
@@ -15,6 +15,7 @@ function Home() {
   const [selectedDate, setSelectedDate] = useState(new Date()); // selectedDate por defecto es la fecha actual
   const [confirmState, setConfirmState] = useState({ show: false, id: null });
   const navigate = useNavigate();
+  const notificationTimeouts = useRef({});
 
   useEffect(() => {
     try {
@@ -80,6 +81,34 @@ function Home() {
     }
   }, [todayTurnos, selectedDate]);
 
+  useEffect(() => {
+    if (!('Notification' in window)) return;
+    navigator.serviceWorker.ready.then((reg) => {
+      Object.values(notificationTimeouts.current).forEach(clearTimeout);
+      notificationTimeouts.current = {};
+
+      todayTurnos.forEach((turno) => {
+        const turnoTime = new Date(`${turno.fecha}T${turno.hora}`);
+        const delay = turnoTime.getTime() - Date.now();
+        if (delay > 0) {
+          const timeoutId = setTimeout(() => {
+            if (Notification.permission === 'granted') {
+              reg.showNotification(`Turno con ${turno.nombre}`, {
+                body: `A las ${turno.hora}`,
+                tag: `turno-${turno.id}`,
+              });
+            }
+          }, delay);
+          notificationTimeouts.current[turno.id] = timeoutId;
+        }
+      });
+    });
+
+    return () => {
+      Object.values(notificationTimeouts.current).forEach(clearTimeout);
+      notificationTimeouts.current = {};
+    };
+  }, [todayTurnos]);
 
   const handleDateChange = (date) => {
     if (date) {
@@ -93,6 +122,10 @@ function Home() {
 
   const confirmDelete = () => {
     const { id } = confirmState;
+    if (notificationTimeouts.current[id]) {
+      clearTimeout(notificationTimeouts.current[id]);
+      delete notificationTimeouts.current[id];
+    }
     setConfirmState({ show: false, id: null });
     toast.promise(deleteTurno(id), {
       loading: 'Eliminando turno...',
