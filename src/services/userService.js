@@ -1,34 +1,37 @@
 import {
-  collection,
-  addDoc,
   doc,
   getDoc,
+  setDoc,
   updateDoc,
   deleteDoc,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { db, auth } from './firebase';
 
 const USERS_COLLECTION = 'users';
 
-// Add a new user document
-export async function addUser(user) {
-  const docRef = await addDoc(collection(db, USERS_COLLECTION), user);
-  return { id: docRef.id, ...user };
+// Add a new user document for the authenticated user
+export async function addUser(data) {
+  const uid = auth.currentUser.uid;
+  await setDoc(doc(db, USERS_COLLECTION, uid), data);
+  return { id: uid, ...data };
 }
 
-// Get a user by id
-export async function getUser(id) {
-  const snap = await getDoc(doc(db, USERS_COLLECTION, id));
+// Get the authenticated user's document
+export async function getUser() {
+  const uid = auth.currentUser.uid;
+  const snap = await getDoc(doc(db, USERS_COLLECTION, uid));
   return snap.exists() ? { id: snap.id, ...snap.data() } : null;
 }
 
-// Update a user document
-export function updateUser(id, data) {
-  return updateDoc(doc(db, USERS_COLLECTION, id), data);
+// Update the authenticated user's document
+export function updateUser(data) {
+  const uid = auth.currentUser.uid;
+  return updateDoc(doc(db, USERS_COLLECTION, uid), data);
 }
 
-// Delete a user document
-export function deleteUser(id) {
-  return deleteDoc(doc(db, USERS_COLLECTION, id));
+// Delete the authenticated user's document
+export function deleteUser() {
+  const uid = auth.currentUser.uid;
+  return deleteDoc(doc(db, USERS_COLLECTION, uid));
 }
 
