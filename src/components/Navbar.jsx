@@ -9,6 +9,7 @@ import {
   FaChartLine,
   FaShoppingBag,
   FaSignOutAlt,
+  FaCut,
 } from 'react-icons/fa';
 
 function Navbar({ currentUser }) {
@@ -37,6 +38,9 @@ function Navbar({ currentUser }) {
         </Link>
         <Link to="/venta-producto" className="btn btn-nav nav-products">
           <FaShoppingBag className="me-1" /> Venta de Producto
+        </Link>
+        <Link to="/servicios" className="btn btn-nav nav-services">
+          <FaCut className="me-1" /> Servicios
         </Link>
       </div>
       <div className="user-actions">
