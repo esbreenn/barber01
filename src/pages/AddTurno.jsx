@@ -69,8 +69,12 @@ function AddTurno() {
       navigate('/');
 
     } catch (err) {
-      console.error("Error en handleSubmit de AddTurno:", err); 
-      toast.error('Hubo un error al validar o guardar el turno.');
+      console.error("Error en handleSubmit de AddTurno:", err);
+      if (err.message === 'No authenticated user') {
+        navigate('/login');
+      } else {
+        toast.error('Hubo un error al validar o guardar el turno.');
+      }
     } finally {
       setLoading(false);
     }

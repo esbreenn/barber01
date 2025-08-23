@@ -35,8 +35,12 @@ function EditTurno() {
         }
       } catch (err) {
         console.error('Error en fetchTurno de EditTurno:', err);
-        toast.error('Error al cargar el turno.');
-        navigate('/');
+        if (err.message === 'No authenticated user') {
+          navigate('/login');
+        } else {
+          toast.error('Error al cargar el turno.');
+          navigate('/');
+        }
       } finally {
         setLoading(false);
       }
@@ -91,7 +95,11 @@ function EditTurno() {
 
     } catch (err) {
       console.error("Error en handleSubmit de EditTurno:", err);
-      toast.error('Error al actualizar el turno.');
+      if (err.message === 'No authenticated user') {
+        navigate('/login');
+      } else {
+        toast.error('Error al actualizar el turno.');
+      }
     } finally {
       setIsSaving(false);
     }

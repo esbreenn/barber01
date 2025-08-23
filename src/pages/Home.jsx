@@ -15,12 +15,19 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const unsubscribe = subscribeTurnos((data) => {
-      setAllTurnos(data);
-      setLoading(false);
-    });
-    return () => unsubscribe();
-  }, []);
+    try {
+      const unsubscribe = subscribeTurnos((data) => {
+        setAllTurnos(data);
+        setLoading(false);
+      });
+      return () => unsubscribe();
+    } catch (err) {
+      console.error('Error al suscribirse a turnos:', err);
+      if (err.message === 'No authenticated user') {
+        navigate('/login');
+      }
+    }
+  }, [navigate]);
 
   const filteredTurnos = useMemo(() => {
     if (!selectedDate) return [];
@@ -80,13 +87,15 @@ function Home() {
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de que quieres eliminar este turno?")) {
-      const promise = deleteTurno(id);
-
-      toast.promise(promise, {
+      toast.promise(deleteTurno(id), {
         loading: 'Eliminando turno...',
         success: 'Turno eliminado con éxito',
         error: (err) => {
           console.error("Error al eliminar:", err);
+          if (err.message === 'No authenticated user') {
+            navigate('/login');
+            return 'Sesión expirada';
+          }
           return 'No se pudo eliminar el turno.';
         }
       });

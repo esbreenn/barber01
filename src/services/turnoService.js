@@ -12,12 +12,19 @@ import {
 } from 'firebase/firestore';
 import { db, auth } from './firebase';
 
-const getTurnosCol = (uid) => collection(db, 'users', uid, 'turnos');
+function getUidOrThrow() {
+  const uid = auth.currentUser?.uid;
+  if (!uid) {
+    throw new Error('No authenticated user');
+  }
+  return uid;
+}
+
+const getTurnosCol = () => collection(db, 'users', getUidOrThrow(), 'turnos');
 
 // Subscribe to turnos collection
 export function subscribeTurnos(callback) {
-  const uid = auth.currentUser.uid;
-  const colRef = getTurnosCol(uid);
+  const colRef = getTurnosCol();
   const unsubscribe = onSnapshot(colRef, (snapshot) => {
     const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
     callback(data);
@@ -27,35 +34,33 @@ export function subscribeTurnos(callback) {
 
 // Add new turno
 export async function addTurno(turno) {
-  const uid = auth.currentUser.uid;
-  const docRef = await addDoc(getTurnosCol(uid), turno);
+  const docRef = await addDoc(getTurnosCol(), turno);
   return { id: docRef.id, ...turno };
 }
 
 // Get turno by id
 export async function getTurno(id) {
-  const uid = auth.currentUser.uid;
+  const uid = getUidOrThrow();
   const snap = await getDoc(doc(db, 'users', uid, 'turnos', id));
   return snap.exists() ? { id: snap.id, ...snap.data() } : null;
 }
 
 // Update turno
 export function updateTurno(id, data) {
-  const uid = auth.currentUser.uid;
+  const uid = getUidOrThrow();
   return updateDoc(doc(db, 'users', uid, 'turnos', id), data);
 }
 
 // Delete turno
 export function deleteTurno(id) {
-  const uid = auth.currentUser.uid;
+  const uid = getUidOrThrow();
   return deleteDoc(doc(db, 'users', uid, 'turnos', id));
 }
 
 // Find turno by date and time
 export async function findTurnoByDate(fecha, hora) {
-  const uid = auth.currentUser.uid;
   const q = query(
-    getTurnosCol(uid),
+    getTurnosCol(),
     where('fecha', '==', fecha),
     where('hora', '==', hora)
   );
@@ -65,7 +70,6 @@ export async function findTurnoByDate(fecha, hora) {
 
 // Retrieve all turnos once
 export async function getAllTurnos() {
-  const uid = auth.currentUser.uid;
-  const snapshot = await getDocs(getTurnosCol(uid));
+  const snapshot = await getDocs(getTurnosCol());
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
 }

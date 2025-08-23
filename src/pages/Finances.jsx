@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { subscribeTurnos } from '../services/turnoService';
 import { subscribeProductSales } from '../services/ventaService';
 import { formatCurrency } from '../utils/formatCurrency';
+import { useNavigate } from 'react-router-dom';
 
 function parseYearMonth(fecha) {
     const date = new Date(fecha);
@@ -19,6 +20,7 @@ function Finances() {
     const [selectedMonth, setSelectedMonth] = useState(today.getMonth() + 1);
     const [selectedYear, setSelectedYear] = useState(today.getFullYear());
     const [selectedCategory, setSelectedCategory] = useState('');
+    const navigate = useNavigate();
 
     const productCategories = useMemo(() => {
         const categories = allProductSales.map((venta) => venta.categoria).filter(Boolean);
@@ -26,20 +28,34 @@ function Finances() {
     }, [allProductSales]);
 
     useEffect(() => {
-        const unsubscribe = subscribeTurnos((data) => {
-            setAllTurnos(data);
-            setLoadingTurnos(false);
-        });
-        return () => unsubscribe();
-    }, []);
+        try {
+            const unsubscribe = subscribeTurnos((data) => {
+                setAllTurnos(data);
+                setLoadingTurnos(false);
+            });
+            return () => unsubscribe();
+        } catch (err) {
+            console.error('Error al suscribirse a turnos:', err);
+            if (err.message === 'No authenticated user') {
+                navigate('/login');
+            }
+        }
+    }, [navigate]);
 
     useEffect(() => {
-        const unsubscribe = subscribeProductSales((data) => {
-            setAllProductSales(data);
-            setLoadingProducts(false);
-        });
-        return () => unsubscribe();
-    }, []);
+        try {
+            const unsubscribe = subscribeProductSales((data) => {
+                setAllProductSales(data);
+                setLoadingProducts(false);
+            });
+            return () => unsubscribe();
+        } catch (err) {
+            console.error('Error al suscribirse a ventas:', err);
+            if (err.message === 'No authenticated user') {
+                navigate('/login');
+            }
+        }
+    }, [navigate]);
 
     // Cálculo de las ganancias y filtrado de turnos para el mes y año seleccionados
     // ¡Aquí añadimos el contador de cortes!
