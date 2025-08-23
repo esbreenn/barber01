@@ -11,6 +11,8 @@ import useServices from '../hooks/useServices';
 // Estado inicial: Ahora incluimos el servicio por defecto y el precio correspondiente
 const initialState = {
   nombre: '',
+  telefono: '',
+  notas: '',
   fecha: '',
   hora: '',
   servicio: '', // Servicio inicial vacío para obligar a la selección

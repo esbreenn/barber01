@@ -38,8 +38,19 @@ export async function addTurno(turno) {
   if (existing) {
     throw new Error('Turno duplicado');
   }
-  const docRef = await addDoc(getTurnosCol(), turno);
-  return { id: docRef.id, ...turno };
+  // Solo almacenamos los campos esperados, incluyendo teléfono y notas.
+  const data = {
+    nombre: turno.nombre,
+    telefono: turno.telefono || '',
+    notas: turno.notas || '',
+    fecha: turno.fecha,
+    hora: turno.hora,
+    servicio: turno.servicio,
+    precio: turno.precio,
+    ...(turno.creado && { creado: turno.creado }),
+  };
+  const docRef = await addDoc(getTurnosCol(), data);
+  return { id: docRef.id, ...data };
 }
 
 // Get turno by id
@@ -52,7 +63,18 @@ export async function getTurno(id) {
 // Update turno
 export function updateTurno(id, data) {
   const uid = getUidOrThrow();
-  return updateDoc(doc(db, 'users', uid, 'turnos', id), data);
+  // Incluimos teléfono y notas en la actualización.
+  const dataToUpdate = {
+    nombre: data.nombre,
+    telefono: data.telefono || '',
+    notas: data.notas || '',
+    fecha: data.fecha,
+    hora: data.hora,
+    servicio: data.servicio,
+    precio: data.precio,
+    ...(data.creado && { creado: data.creado }),
+  };
+  return updateDoc(doc(db, 'users', uid, 'turnos', id), dataToUpdate);
 }
 
 // Delete turno
