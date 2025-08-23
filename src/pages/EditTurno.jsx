@@ -6,7 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import TurnoForm from '../components/TurnoForm';
 import toast from 'react-hot-toast';
 import useServices from '../hooks/useServices';
-import { getCurrentUser } from '../services/authService';
+import { auth } from '../services/firebase';
 
 function EditTurno() {
   const { id } = useParams();
@@ -15,12 +15,12 @@ function EditTurno() {
   const [loading, setLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const { services, servicePrices } = useServices();
-  const currentUser = getCurrentUser();
+  const uid = auth.currentUser.uid;
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const turnoDoc = await getTurno(currentUser.uid, id);
+        const turnoDoc = await getTurno(uid, id);
         if (turnoDoc) {
           const data = turnoDoc;
           setTurno({
@@ -44,7 +44,7 @@ function EditTurno() {
       }
     };
     fetchData();
-  }, [id, navigate, currentUser]);
+  }, [id, navigate, uid]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -76,7 +76,7 @@ function EditTurno() {
     setIsSaving(true);
     
     try {
-      const existing = await findTurnoByDate(currentUser.uid, turno.fecha, turno.hora);
+      const existing = await findTurnoByDate(uid, turno.fecha, turno.hora);
       if (existing && existing.id !== id) {
         toast.error("Este horario ya está ocupado por otro turno.");
         setIsSaving(false);
@@ -86,7 +86,7 @@ function EditTurno() {
       const precioNumerico = parseFloat(turno.precio);
 
       const { id: turnoId, ...dataToUpdate } = turno;
-      await updateTurno(currentUser.uid, turnoId, { ...dataToUpdate, precio: precioNumerico });
+      await updateTurno(uid, turnoId, { ...dataToUpdate, precio: precioNumerico });
 
       toast.success('Turno actualizado con éxito');
       navigate('/');
