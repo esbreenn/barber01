@@ -16,6 +16,20 @@
   --color-border: #444;
 }
 
+:root[data-theme="light"] {
+  --color-background: #f8f9fa;
+  --color-surface: #fff;
+  --color-primary: #007bff;
+  --color-primary-hover: #0056b3;
+  --color-info: #17a2b8;
+  --color-danger: #dc3545;
+  --color-success: #28a745;
+  --color-warning: #ffc107;
+  --color-text-primary: #212529;
+  --color-text-secondary: #555;
+  --color-border: #ccc;
+}
+
 
 
 body {
