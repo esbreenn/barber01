@@ -8,6 +8,7 @@ import EditTurno from "./pages/EditTurno";
 import Login from "./pages/Login";
 import Finances from "./pages/Finances";
 import AddProducto from "./pages/AddProducto";
+import ServicesPanel from "./pages/ServicesPanel";
 
 import Navbar from "./components/Navbar";
 
@@ -52,6 +53,10 @@ function App() {
           <Route
             path="/venta-producto"
             element={<PrivateRoute user={currentUser}><AddProducto /></PrivateRoute>}
+          />
+          <Route
+            path="/servicios"
+            element={<PrivateRoute user={currentUser}><ServicesPanel /></PrivateRoute>}
           />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>

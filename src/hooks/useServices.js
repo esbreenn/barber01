@@ -1,24 +1,28 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { subscribeServices } from '../services/serviceService';
 
-// Hook simplificado: devuelve dos servicios fijos con precios predeterminados.
 function useServices() {
-  const services = useMemo(
-    () => [
-      { id: 'corte', nombre: 'Corte de Cabello' },
-      { id: 'corte-barba', nombre: 'Corte de Cabello y Barba' },
-    ],
-    []
-  );
+  const [services, setServices] = useState([]);
 
-  const servicePrices = useMemo(
-    () => ({
-      'Corte de Cabello': 9000,
-      'Corte de Cabello y Barba': 12000,
-    }),
-    []
-  );
+  useEffect(() => {
+    let unsubscribe;
+    try {
+      unsubscribe = subscribeServices(setServices);
+    } catch (err) {
+      console.error('Error subscribing to services:', err);
+    }
+    return () => unsubscribe && unsubscribe();
+  }, []);
+
+  const servicePrices = useMemo(() => (
+    services.reduce((acc, s) => {
+      acc[s.nombre] = s.precio;
+      return acc;
+    }, {})
+  ), [services]);
 
   return { services, servicePrices };
 }
 
 export default useServices;
+
