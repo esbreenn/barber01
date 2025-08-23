@@ -1,6 +1,6 @@
 // src/components/Navbar.jsx
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { logout } from '../services/authService';
 import {
@@ -11,10 +11,13 @@ import {
   FaSignOutAlt,
   FaCut,
   FaUsers,
+  FaBars,
 } from 'react-icons/fa';
 
 function Navbar({ currentUser }) {
   const navigate = useNavigate();
+  const [menuOpen, setMenuOpen] = useState(false);
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -24,26 +27,38 @@ function Navbar({ currentUser }) {
     }
   };
 
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
+  const closeMenu = () => setMenuOpen(false);
+
   return (
     <nav className="app-navbar">
-      <div className="nav-buttons">
-        <Link to="/" className="btn btn-nav nav-home">
+      <button
+        className="menu-toggle"
+        aria-label="Abrir menú de navegación"
+        aria-expanded={menuOpen}
+        aria-controls="navbar-menu"
+        onClick={toggleMenu}
+      >
+        <FaBars />
+      </button>
+      <div id="navbar-menu" className={`nav-buttons ${menuOpen ? 'show' : ''}`}>
+        <Link to="/" className="btn btn-nav nav-home" onClick={closeMenu}>
           <FaHome className="me-1" /> Inicio
         </Link>
-        <Link to="/nuevo" className="btn btn-nav nav-new">
+        <Link to="/nuevo" className="btn btn-nav nav-new" onClick={closeMenu}>
           <FaPlusCircle className="me-1" /> Agregar Turno
         </Link>
         {/* ¡NUEVO ENLACE para Finanzas! */}
-        <Link to="/finanzas" className="btn btn-nav nav-finances">
+        <Link to="/finanzas" className="btn btn-nav nav-finances" onClick={closeMenu}>
           <FaChartLine className="me-1" /> Finanzas
         </Link>
-        <Link to="/venta-producto" className="btn btn-nav nav-products">
+        <Link to="/venta-producto" className="btn btn-nav nav-products" onClick={closeMenu}>
           <FaShoppingBag className="me-1" /> Venta de Producto
         </Link>
-        <Link to="/servicios" className="btn btn-nav nav-services">
+        <Link to="/servicios" className="btn btn-nav nav-services" onClick={closeMenu}>
           <FaCut className="me-1" /> Servicios
         </Link>
-        <Link to="/clientes" className="btn btn-nav nav-clients">
+        <Link to="/clientes" className="btn btn-nav nav-clients" onClick={closeMenu}>
           <FaUsers className="me-1" /> Clientes
         </Link>
       </div>
