@@ -32,8 +32,12 @@ export function subscribeTurnos(callback) {
   return unsubscribe;
 }
 
-// Add new turno
+// Add new turno ensuring no duplicate schedule exists
 export async function addTurno(turno) {
+  const existing = await findTurnoByDate(turno.fecha, turno.hora);
+  if (existing) {
+    throw new Error('Turno duplicado');
+  }
   const docRef = await addDoc(getTurnosCol(), turno);
   return { id: docRef.id, ...turno };
 }

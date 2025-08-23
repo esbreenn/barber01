@@ -35,3 +35,13 @@ users/{userId}
 ```
 
 Cada documento y subcolección solo puede ser leído o escrito por el usuario autenticado cuyo ID coincide con `userId`. Se eliminaron las colecciones globales de `turnos` y `productSales` para evitar que un usuario autenticado acceda o modifique datos de otros. De esta manera se protege la privacidad de la información y se reducen riesgos de manipulación no autorizada.
+
+## Ejecutar tests
+
+Instala las dependencias y luego ejecuta:
+
+```bash
+npm test
+```
+
+Esto ejecutará la suite de pruebas con Vitest.
