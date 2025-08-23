@@ -10,12 +10,13 @@ import {
   where,
   getDocs,
 } from 'firebase/firestore';
-import { db } from './firebase';
+import { db, auth } from './firebase';
 
 const getTurnosCol = (uid) => collection(db, 'users', uid, 'turnos');
 
 // Subscribe to turnos collection
-export function subscribeTurnos(uid, callback) {
+export function subscribeTurnos(callback) {
+  const uid = auth.currentUser.uid;
   const colRef = getTurnosCol(uid);
   const unsubscribe = onSnapshot(colRef, (snapshot) => {
     const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
@@ -25,29 +26,34 @@ export function subscribeTurnos(uid, callback) {
 }
 
 // Add new turno
-export async function addTurno(uid, turno) {
+export async function addTurno(turno) {
+  const uid = auth.currentUser.uid;
   const docRef = await addDoc(getTurnosCol(uid), turno);
   return { id: docRef.id, ...turno };
 }
 
 // Get turno by id
-export async function getTurno(uid, id) {
+export async function getTurno(id) {
+  const uid = auth.currentUser.uid;
   const snap = await getDoc(doc(db, 'users', uid, 'turnos', id));
   return snap.exists() ? { id: snap.id, ...snap.data() } : null;
 }
 
 // Update turno
-export function updateTurno(uid, id, data) {
+export function updateTurno(id, data) {
+  const uid = auth.currentUser.uid;
   return updateDoc(doc(db, 'users', uid, 'turnos', id), data);
 }
 
 // Delete turno
-export function deleteTurno(uid, id) {
+export function deleteTurno(id) {
+  const uid = auth.currentUser.uid;
   return deleteDoc(doc(db, 'users', uid, 'turnos', id));
 }
 
 // Find turno by date and time
-export async function findTurnoByDate(uid, fecha, hora) {
+export async function findTurnoByDate(fecha, hora) {
+  const uid = auth.currentUser.uid;
   const q = query(
     getTurnosCol(uid),
     where('fecha', '==', fecha),
@@ -58,7 +64,8 @@ export async function findTurnoByDate(uid, fecha, hora) {
 }
 
 // Retrieve all turnos once
-export async function getAllTurnos(uid) {
+export async function getAllTurnos() {
+  const uid = auth.currentUser.uid;
   const snapshot = await getDocs(getTurnosCol(uid));
   return snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
 }
