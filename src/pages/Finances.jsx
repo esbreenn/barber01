@@ -148,7 +148,7 @@ function Finances() {
                     <label htmlFor="month-select" className="form-label me-2 mb-0">Mes:</label>
                     <select
                         id="month-select"
-                        className="form-select w-auto me-3 theme-select border-0"
+                        className="form-select w-auto me-3"
                         value={selectedMonth}
                         onChange={(e) => setSelectedMonth(Number(e.target.value))}
                     >
@@ -160,7 +160,7 @@ function Finances() {
                     <label htmlFor="year-select" className="form-label me-2 mb-0">Año:</label>
                     <select
                         id="year-select"
-                        className="form-select w-auto me-3 theme-select border-0"
+                        className="form-select w-auto me-3"
                         value={selectedYear}
                         onChange={(e) => setSelectedYear(Number(e.target.value))}
                     >
@@ -172,7 +172,7 @@ function Finances() {
                     <label htmlFor="category-select" className="form-label me-2 mb-0">Categoría:</label>
                     <select
                         id="category-select"
-                        className="form-select w-auto theme-select border-0"
+                        className="form-select w-auto"
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
                     >
