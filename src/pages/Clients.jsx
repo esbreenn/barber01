@@ -46,14 +46,14 @@ function Clients() {
       {clientEntries.map(([nombre, turnos]) => {
         const telefono = turnos[0].telefono;
         return (
-          <div className="card mb-4" key={nombre}>
+          <div className="card theme-card mb-4" key={nombre}>
             <div className="card-header">
               <strong>{nombre}</strong>
               {telefono && <span className="ms-2">- {telefono}</span>}
             </div>
-            <ul className="list-group list-group-flush">
+            <ul className="theme-list">
               {turnos.map((t) => (
-                <li key={t.id} className="list-group-item">
+                <li key={t.id} className="theme-list-item">
                   <div className="d-flex justify-content-between">
                     <span>{t.fecha} {t.hora}</span>
                     <span>{t.servicio} - {formatCurrency(t.precio)}</span>
