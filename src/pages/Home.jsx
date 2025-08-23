@@ -7,11 +7,13 @@ import CalendarView from "../components/CalendarView";
 import TurnoList from "../components/TurnoList";
 import toast from 'react-hot-toast';
 import { formatCurrency } from "../utils/formatCurrency";
+import ConfirmDialog from "../components/ConfirmDialog";
 
 function Home() {
   const [allTurnos, setAllTurnos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date()); // selectedDate por defecto es la fecha actual
+  const [confirmState, setConfirmState] = useState({ show: false, id: null });
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,21 +87,29 @@ function Home() {
     }
   };
 
-  const handleDelete = async (id) => {
-    if (window.confirm("¿Estás seguro de que quieres eliminar este turno?")) {
-      toast.promise(deleteTurno(id), {
-        loading: 'Eliminando turno...',
-        success: 'Turno eliminado con éxito',
-        error: (err) => {
-          console.error("Error al eliminar:", err);
-          if (err.message === 'No authenticated user') {
-            navigate('/login');
-            return 'Sesión expirada';
-          }
-          return 'No se pudo eliminar el turno.';
+  const handleDelete = (id) => {
+    setConfirmState({ show: true, id });
+  };
+
+  const confirmDelete = () => {
+    const { id } = confirmState;
+    setConfirmState({ show: false, id: null });
+    toast.promise(deleteTurno(id), {
+      loading: 'Eliminando turno...',
+      success: 'Turno eliminado con éxito',
+      error: (err) => {
+        console.error("Error al eliminar:", err);
+        if (err.message === 'No authenticated user') {
+          navigate('/login');
+          return 'Sesión expirada';
         }
-      });
-    }
+        return 'No se pudo eliminar el turno.';
+      }
+    });
+  };
+
+  const cancelDelete = () => {
+    setConfirmState({ show: false, id: null });
   };
 
   const handleEdit = (id) => {
@@ -131,10 +141,18 @@ function Home() {
       <h3 className="mb-3 mt-4 text-white">
         {selectedDate && `Turnos para el ${selectedDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}`}
       </h3>
-      <TurnoList 
+      <TurnoList
         turnos={filteredTurnos}
         onEdit={handleEdit}
         onDelete={handleDelete}
+      />
+      <ConfirmDialog
+        show={confirmState.show}
+        message="¿Estás seguro de que quieres eliminar este turno?"
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+        confirmText="Eliminar"
+        cancelText="Cancelar"
       />
     </div>
   );
