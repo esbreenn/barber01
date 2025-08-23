@@ -20,7 +20,6 @@ function AddProducto() {
   const [producto, setProducto] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const uid = auth.currentUser.uid;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,6 +41,7 @@ function AddProducto() {
     setLoading(true);
 
     try {
+      const uid = auth.currentUser.uid;
       await addProductSale(uid, {
         nombre: producto.nombre,
         costo: Number(producto.costo),
