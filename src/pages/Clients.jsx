@@ -46,7 +46,7 @@ function Clients() {
       {clientEntries.map(([nombre, turnos]) => {
         const telefono = turnos[0].telefono;
         return (
-          <div className="card theme-card mb-4" key={nombre}>
+          <div className="theme-card mb-4" key={nombre}>
             <div className="card-header">
               <strong>{nombre}</strong>
               {telefono && <span className="ms-2">- {telefono}</span>}
