@@ -1,5 +1,6 @@
 /* src/index.css (Final con Tabla Simplificada y Estilos de Finanzas) */
-
+@import 'bootstrap/dist/css/bootstrap.min.css'; /* ¡IMPORTANTE! Asegúrate de importar Bootstrap primero */
+@import 'react-day-picker/dist/style.css'; /* Estilos del calendario */
 /* 1. Variables de Tema y Estilos Globales */
 :root {
   --color-background: #121212;
@@ -15,8 +16,7 @@
   --color-border: #444;
 }
 
-@import 'bootstrap/dist/css/bootstrap.min.css'; /* ¡IMPORTANTE! Asegúrate de importar Bootstrap primero */
-@import 'react-day-picker/dist/style.css'; /* Estilos del calendario */
+
 
 body {
   margin: 0;
