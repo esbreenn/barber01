@@ -13,6 +13,7 @@ import {
   FaUsers,
   FaBars,
 } from 'react-icons/fa';
+import ThemeToggle from './ThemeToggle';
 
 function Navbar({ currentUser }) {
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ function Navbar({ currentUser }) {
         </Link>
       </div>
       <div className="user-actions">
+        <ThemeToggle />
         {/* Aquí mostramos el email del usuario logueado */}
         <span className="welcome-text">
           Bienvenido {currentUser && currentUser.email ? currentUser.email.split('@')[0] : 'Usuario'}
