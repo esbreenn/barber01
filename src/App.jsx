@@ -34,7 +34,7 @@ function App() {
   }, []);
 
   return (
-    <div className="container-fluid px-3 py-4 bg-dark text-white min-vh-100 d-flex flex-column">
+    <div className="container-fluid px-3 py-4 theme-container min-vh-100 d-flex flex-column">
       {currentUser && <Navbar currentUser={currentUser} />}
 
       <main className="flex-grow-1 mt-3">

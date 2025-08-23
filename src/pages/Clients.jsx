@@ -42,7 +42,7 @@ function Clients() {
   return (
     <div className="container mt-4">
       <h2 className="mb-4">Clientes</h2>
-      {clientEntries.length === 0 && <p className="text-white-50">No hay turnos registrados.</p>}
+      {clientEntries.length === 0 && <p className="text-secondary">No hay turnos registrados.</p>}
       {clientEntries.map(([nombre, turnos]) => {
         const telefono = turnos[0].telefono;
         return (

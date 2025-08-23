@@ -163,8 +163,8 @@ function Home() {
       )}
       {/* FIN NUEVO */}
 
-      <h2 className="mb-3 text-white">Tu Agenda</h2>
-      <div className="text-white mb-3">
+      <h2 className="mb-3">Tu Agenda</h2>
+      <div className="mb-3">
         Cortes completados: {cortesCompletados.length} — Ganancia: {formatCurrency(gananciaDiaria)}
       </div>
       <CalendarView
@@ -172,7 +172,7 @@ function Home() {
         selectedDate={selectedDate}
         turnos={allTurnos}
       />
-      <h3 className="mb-3 mt-4 text-white">
+      <h3 className="mb-3 mt-4">
         {selectedDate && `Turnos para el ${selectedDate.toLocaleDateString('es-ES', { weekday: 'long', day: 'numeric', month: 'long' })}`}
       </h3>
       <TurnoList
