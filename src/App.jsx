@@ -12,18 +12,13 @@ import ServicesPanel from "./pages/ServicesPanel";
 import Clients from "./pages/Clients";
 
 import Navbar from "./components/Navbar";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 import { onAuthStateChanged } from "./services/authService";
 
 function PrivateRoute({ user, children }) {
   if (user === undefined) {
-    return (
-      <div className="d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Cargando...</span>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner style={{ height: '80vh' }} />;
   }
   return user ? children : <Navigate to="/login" />;
 }
