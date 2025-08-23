@@ -206,7 +206,7 @@ function Finances() {
                 {turnosDelMesFiltrados.length > 0 && (
                     <div className="mt-4 table-responsive">
                         <h4 className="text-secondary mb-3">Detalle de Turnos del Mes:</h4>
-                        <table className="table table-dark table-striped table-hover">
+                        <table className="table theme-table">
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
@@ -237,7 +237,7 @@ function Finances() {
                 {ventasDelMesFiltradas.length > 0 && (
                     <div className="mt-4 table-responsive">
                         <h4 className="text-secondary mb-3">Detalle de Ventas de Productos del Mes:</h4>
-                        <table className="table table-dark table-striped table-hover">
+                        <table className="table theme-table">
                             <thead>
                                 <tr>
                                     <th>Fecha</th>
