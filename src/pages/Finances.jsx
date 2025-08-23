@@ -36,7 +36,8 @@ function Finances() {
     }, []);
 
     useEffect(() => {
-        const unsubscribe = subscribeProductSales((data) => {
+        const uid = auth.currentUser.uid;
+        const unsubscribe = subscribeProductSales(uid, (data) => {
             setAllProductSales(data);
             setLoadingProducts(false);
         });

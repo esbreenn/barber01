@@ -6,6 +6,7 @@ import { serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import ProductoForm from '../components/ProductoForm';
+import { auth } from '../services/firebase';
 
 const initialState = {
   nombre: '',
@@ -19,6 +20,7 @@ function AddProducto() {
   const [producto, setProducto] = useState(initialState);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const uid = auth.currentUser.uid;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -40,7 +42,7 @@ function AddProducto() {
     setLoading(true);
 
     try {
-      await addProductSale({
+      await addProductSale(uid, {
         nombre: producto.nombre,
         costo: Number(producto.costo),
         precioVenta: Number(producto.precioVenta),
