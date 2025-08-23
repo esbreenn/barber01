@@ -8,6 +8,7 @@ import TurnoList from "../components/TurnoList";
 import toast from 'react-hot-toast';
 import { formatCurrency } from "../utils/formatCurrency";
 import ConfirmDialog from "../components/ConfirmDialog";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function Home() {
   const [allTurnos, setAllTurnos] = useState([]);
@@ -149,7 +150,7 @@ function Home() {
     navigate(`/edit-turno/${id}`);
   };
 
-  if (loading) return <div className="text-center mt-5"><div className="spinner-border text-primary"></div></div>;
+  if (loading) return <LoadingSpinner className="mt-5" />;
 
   return (
     <div className="container mt-4">

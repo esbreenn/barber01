@@ -5,6 +5,7 @@ import { subscribeTurnos } from '../services/turnoService';
 import { subscribeProductSales } from '../services/ventaService';
 import { formatCurrency } from '../utils/formatCurrency';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 function parseYearMonth(fecha) {
     const date = new Date(fecha);
@@ -135,11 +136,7 @@ function Finances() {
     ];
 
     if (loadingTurnos || loadingProducts) {
-        return (
-            <div className="text-center mt-5">
-                <div className="spinner-border text-primary"></div>
-            </div>
-        );
+        return <LoadingSpinner className="mt-5" />;
     }
 
     return (

@@ -6,6 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import TurnoForm from '../components/TurnoForm';
 import toast from 'react-hot-toast';
 import useServices from '../hooks/useServices';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 function EditTurno() {
   const { id } = useParams();
@@ -107,7 +108,7 @@ function EditTurno() {
     }
   };
   
-  if (loading) return <div className="text-center mt-5"><div className="spinner-border text-primary"></div></div>;
+  if (loading) return <LoadingSpinner className="mt-5" />;
   if (!turno) return <div className="alert alert-danger text-center">No se encontró el turno.</div>;
 
   return (
