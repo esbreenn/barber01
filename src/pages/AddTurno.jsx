@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import TurnoForm from '../components/TurnoForm';
 import toast from 'react-hot-toast';
 import useServices from '../hooks/useServices';
-import { auth } from '../services/firebase';
 
 // Estado inicial: Ahora incluimos el servicio por defecto y el precio correspondiente
 const initialState = {
@@ -23,7 +22,6 @@ function AddTurno() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { services, servicePrices } = useServices();
-  const uid = auth.currentUser.uid;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,7 +53,7 @@ function AddTurno() {
     setLoading(true);
 
     try {
-      const existing = await findTurnoByDate(uid, turno.fecha, turno.hora);
+      const existing = await findTurnoByDate(turno.fecha, turno.hora);
       if (existing) {
         toast.error("Este horario ya está ocupado. Por favor, elige otro.");
         setLoading(false);
@@ -66,7 +64,7 @@ function AddTurno() {
       // Aseguramos que se guarde como número.
       const precioNumerico = parseFloat(turno.precio);
 
-      await addTurno(uid, { ...turno, precio: precioNumerico, creado: serverTimestamp() });
+      await addTurno({ ...turno, precio: precioNumerico, creado: serverTimestamp() });
       toast.success('Turno guardado con éxito');
       navigate('/');
 

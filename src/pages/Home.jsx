@@ -7,7 +7,6 @@ import CalendarView from "../components/CalendarView";
 import TurnoList from "../components/TurnoList";
 import toast from 'react-hot-toast';
 import { formatCurrency } from "../utils/formatCurrency";
-import { auth } from "../services/firebase";
 
 function Home() {
   const [allTurnos, setAllTurnos] = useState([]);
@@ -16,9 +15,7 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!auth.currentUser) return;
-    const uid = auth.currentUser.uid;
-    const unsubscribe = subscribeTurnos(uid, (data) => {
+    const unsubscribe = subscribeTurnos((data) => {
       setAllTurnos(data);
       setLoading(false);
     });
@@ -83,8 +80,7 @@ function Home() {
 
   const handleDelete = async (id) => {
     if (window.confirm("¿Estás seguro de que quieres eliminar este turno?")) {
-      const uid = auth.currentUser.uid;
-      const promise = deleteTurno(uid, id);
+      const promise = deleteTurno(id);
 
       toast.promise(promise, {
         loading: 'Eliminando turno...',
