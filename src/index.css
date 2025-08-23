@@ -219,3 +219,12 @@ body {
     align-items: center;
   }
 }
+dialog.modal {
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
