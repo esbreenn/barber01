@@ -1,10 +1,13 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Product sales collection
-    match /productSales/{document} {
-      allow read, write: if request.auth != null;
-    }
+    // Colecciones globales deshabilitadas
+    // match /turnos/{turnoId} {
+    //   allow read, write: if request.auth != null;
+    // }
+    // match /productSales/{document} {
+    //   allow read, write: if request.auth != null;
+    // }
 
     // Users collection and subcollections
     match /users/{userId} {
@@ -12,6 +15,11 @@ service cloud.firestore {
 
       // Turnos subcollection per user
       match /turnos/{turnoId} {
+        allow read, write: if request.auth != null && request.auth.uid == userId;
+      }
+
+      // Ventas de productos subcollection per user
+      match /ventasProductos/{ventaId} {
         allow read, write: if request.auth != null && request.auth.uid == userId;
       }
     }
