@@ -23,3 +23,9 @@ Este proyecto utiliza Firebase. Crea un archivo `.env` en la raíz del proyecto 
 - `VITE_FIREBASE_APP_ID`
 
 Estos valores configuran el SDK de Firebase para la autenticación y el acceso a Firestore.
+
+## Despliegue en GitHub Pages
+
+La aplicación utiliza `HashRouter` para que las rutas funcionen correctamente al refrescar en GitHub Pages.
+Las URL tendrán la forma `https://esbreenn.github.io/barber-turnos-app/#/ruta`.
+
