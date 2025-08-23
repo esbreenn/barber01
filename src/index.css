@@ -14,6 +14,10 @@
   --color-text-primary: #f8f9fa;
   --color-text-secondary: #bbb;
   --color-border: #444;
+  --color-text-on-accent: #fff;
+  --color-text-dark: #212529;
+  --color-primary-rgb: 0, 123, 255;
+  --color-backdrop: rgba(0, 0, 0, 0.5);
 }
 
 :root[data-theme="light"] {
@@ -28,6 +32,10 @@
   --color-text-primary: #212529;
   --color-text-secondary: #555;
   --color-border: #ccc;
+  --color-text-on-accent: #fff;
+  --color-text-dark: #212529;
+  --color-primary-rgb: 0, 123, 255;
+  --color-backdrop: rgba(0, 0, 0, 0.5);
 }
 
 
@@ -70,11 +78,11 @@ body {
   color: var(--color-text-primary);
   border-color: var(--color-border); 
 }
-.form-control:focus { 
-  background-color: var(--color-surface); 
-  color: var(--color-text-primary); 
-  border-color: var(--color-primary); 
-  box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25); 
+.form-control:focus {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.25rem rgba(var(--color-primary-rgb), 0.25);
 }
 .calendar-container { display: flex; justify-content: center; margin-bottom: 25px; }
 
@@ -97,18 +105,18 @@ body {
   border-radius: 0.25rem; 
   transition: all .15s ease-in-out; 
 }
-.btn-primary { color: #fff; background-color: var(--color-primary); border-color: var(--color-primary); }
-.btn-primary:hover { color: #fff; background-color: var(--color-primary-hover); border-color: var(--color-primary-hover); }
+.btn-primary { color: var(--color-text-on-accent); background-color: var(--color-primary); border-color: var(--color-primary); }
+.btn-primary:hover { color: var(--color-text-on-accent); background-color: var(--color-primary-hover); border-color: var(--color-primary-hover); }
 .btn-outline-light { color: var(--color-text-primary); border-color: var(--color-text-primary); }
 .btn-outline-light:hover { color: var(--color-background); background-color: var(--color-text-primary); }
 .btn-outline-danger { color: var(--color-danger); border-color: var(--color-danger); }
-.btn-outline-danger:hover { color: #fff; background-color: var(--color-danger); border-color: var(--color-danger); }
+.btn-outline-danger:hover { color: var(--color-text-on-accent); background-color: var(--color-danger); border-color: var(--color-danger); }
 .btn-outline-info { color: var(--color-info); border-color: var(--color-info); }
-.btn-outline-info:hover { color: #fff; background-color: var(--color-info); border-color: var(--color-info); }
+.btn-outline-info:hover { color: var(--color-text-on-accent); background-color: var(--color-info); border-color: var(--color-info); }
 .btn-outline-success { color: var(--color-success); border-color: var(--color-success); } /* NUEVO: Botón de éxito */
-.btn-outline-success:hover { color: #fff; background-color: var(--color-success); border-color: var(--color-success); } /* NUEVO: Botón de éxito hover */
+.btn-outline-success:hover { color: var(--color-text-on-accent); background-color: var(--color-success); border-color: var(--color-success); } /* NUEVO: Botón de éxito hover */
 .btn-outline-warning { color: var(--color-warning); border-color: var(--color-warning); }
-.btn-outline-warning:hover { color: #212529; background-color: var(--color-warning); border-color: var(--color-warning); }
+.btn-outline-warning:hover { color: var(--color-text-dark); background-color: var(--color-warning); border-color: var(--color-warning); }
 .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; border-radius: 0.2rem; }
 
 /* Botones de navegación unificados */
@@ -140,7 +148,7 @@ body {
 .btn-nav.nav-logout:hover { background-color: var(--color-danger); color: var(--color-background); }
 
 /* 4. Barra de Navegación (Navbar) */
-.app-navbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-bottom: 1px solid #333; padding-bottom: 15px; margin-bottom: 25px; }
+.app-navbar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-bottom: 1px solid var(--color-border); padding-bottom: 15px; margin-bottom: 25px; }
 .app-navbar .nav-buttons, .app-navbar .user-actions { display: flex; align-items: center; gap: 10px; }
 .app-navbar .welcome-text { font-size: 0.9em; color: var(--color-text-secondary); margin-right: 10px; }
 
@@ -212,7 +220,7 @@ body {
 }
 .form-select:focus {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(var(--color-primary-rgb), 0.25);
 }
 
 
@@ -276,5 +284,5 @@ dialog.modal {
 }
 
 dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: var(--color-backdrop);
 }
