@@ -5,7 +5,7 @@ import TurnoCard from './TurnoCard';
 
 function TurnoList({ turnos, onEdit, onDelete }) {
   if (turnos.length === 0) {
-    return <p className="text-white-50 text-center mt-4">No hay turnos registrados para este día.</p>;
+    return <p className="text-secondary text-center mt-4">No hay turnos registrados para este día.</p>;
   }
 
   return (

@@ -40,7 +40,7 @@ function ConfirmDialog({ show, message, onConfirm, onCancel, confirmText = 'Acep
   return createPortal(
     (
       <dialog ref={dialogRef} open onClick={handleClickOutside} className="modal" aria-modal="true">
-        <div className="modal-content bg-dark text-white">
+        <div className="modal-content theme-card">
           <div className="modal-body">
             {message}
           </div>

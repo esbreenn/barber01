@@ -113,7 +113,7 @@ function EditTurno() {
 
   return (
     <div className="container mt-4" style={{ maxWidth: '600px' }}>
-      <div className="card bg-dark text-white p-4 shadow-sm" style={{ maxWidth: '500px', width: '100%' }}>
+      <div className="card theme-card p-4 shadow-sm" style={{ maxWidth: '500px', width: '100%' }}>
         <h2 className="mb-4 text-center">Editar Turno</h2>
         {turno && ( // Renderizamos el formulario solo si 'turno' no es null
           <TurnoForm

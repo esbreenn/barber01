@@ -141,14 +141,14 @@ function Finances() {
 
     return (
         <div className="container mt-4" style={{ maxWidth: '800px' }}>
-            <h2 className="mb-4 text-white text-center">Resumen de Finanzas</h2>
+            <h2 className="mb-4 text-center">Resumen de Finanzas</h2>
 
-            <div className="card bg-dark text-white p-4 shadow-sm mb-4">
+            <div className="card theme-card p-4 shadow-sm mb-4">
                 <div className="d-flex flex-wrap justify-content-center align-items-center mb-3">
                     <label htmlFor="month-select" className="form-label me-2 mb-0">Mes:</label>
                     <select
                         id="month-select"
-                        className="form-select w-auto me-3 bg-secondary text-white border-0"
+                        className="form-select w-auto me-3 theme-select border-0"
                         value={selectedMonth}
                         onChange={(e) => setSelectedMonth(Number(e.target.value))}
                     >
@@ -160,7 +160,7 @@ function Finances() {
                     <label htmlFor="year-select" className="form-label me-2 mb-0">Año:</label>
                     <select
                         id="year-select"
-                        className="form-select w-auto me-3 bg-secondary text-white border-0"
+                        className="form-select w-auto me-3 theme-select border-0"
                         value={selectedYear}
                         onChange={(e) => setSelectedYear(Number(e.target.value))}
                     >
@@ -172,7 +172,7 @@ function Finances() {
                     <label htmlFor="category-select" className="form-label me-2 mb-0">Categoría:</label>
                     <select
                         id="category-select"
-                        className="form-select w-auto bg-secondary text-white border-0"
+                        className="form-select w-auto theme-select border-0"
                         value={selectedCategory}
                         onChange={(e) => setSelectedCategory(e.target.value)}
                     >
@@ -199,13 +199,13 @@ function Finances() {
                 </h4>
                 {/* FIN NUEVO */}
 
-                <p className="text-center text-white-50">
+                <p className="text-center text-secondary">
                     Calculado a partir de los turnos con precio y las ventas de productos en el mes seleccionado.
                 </p>
                 
                 {turnosDelMesFiltrados.length > 0 && (
                     <div className="mt-4 table-responsive">
-                        <h4 className="text-white-50 mb-3">Detalle de Turnos del Mes:</h4>
+                        <h4 className="text-secondary mb-3">Detalle de Turnos del Mes:</h4>
                         <table className="table table-dark table-striped table-hover">
                             <thead>
                                 <tr>
@@ -231,12 +231,12 @@ function Finances() {
                     </div>
                 )}
                 {turnosDelMesFiltrados.length === 0 && (
-                    <p className="text-white-50 text-center mt-3">No hay turnos con precio para este mes.</p>
+                    <p className="text-secondary text-center mt-3">No hay turnos con precio para este mes.</p>
                 )}
 
                 {ventasDelMesFiltradas.length > 0 && (
                     <div className="mt-4 table-responsive">
-                        <h4 className="text-white-50 mb-3">Detalle de Ventas de Productos del Mes:</h4>
+                        <h4 className="text-secondary mb-3">Detalle de Ventas de Productos del Mes:</h4>
                         <table className="table table-dark table-striped table-hover">
                             <thead>
                                 <tr>
@@ -264,7 +264,7 @@ function Finances() {
                     </div>
                 )}
                 {ventasDelMesFiltradas.length === 0 && (
-                    <p className="text-white-50 text-center mt-3">No hay ventas de productos para este mes.</p>
+                    <p className="text-secondary text-center mt-3">No hay ventas de productos para este mes.</p>
                 )}
 
             </div>
@@ -273,3 +273,4 @@ function Finances() {
 }
 
 export default Finances;
+
