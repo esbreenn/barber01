@@ -226,7 +226,7 @@ body {
   border-top: 1px solid var(--color-border);
 }
 .col-hora {
-  flex: 0 0 100px; /* Ancho fijo para la hora */
+  flex: 0 0 20%; /* Ancho proporcional para la hora */
   text-align: center;
 }
 .col-nombre {
@@ -249,10 +249,20 @@ body {
   color: var(--color-text-secondary);
 }
 .col-acciones {
-  flex: 0 0 110px; /* Ancho fijo para los botones */
+  flex: 0 0 25%; /* Ancho proporcional para los botones */
   display: flex;
   justify-content: center;
   gap: 10px;
+}
+
+@media (max-width: 575.98px) {
+  .col-hora {
+    flex: 0 0 18%;
+  }
+  .col-acciones {
+    flex: 0 0 30%;
+    gap: 5px;
+  }
 }
 
 /* 7. Estilos Específicos para Selectores (Finanzas y TurnoForm) */
