@@ -357,3 +357,46 @@ dialog.modal {
 dialog::backdrop {
   background-color: var(--color-backdrop);
 }
+
+/* 9. Ajustes para pantallas muy pequeñas */
+@media (max-width: 575.98px) {
+  /* Barra de navegación: reducir márgenes y tamaños */
+  .app-navbar {
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    gap: 10px;
+  }
+  .app-navbar .nav-buttons,
+  .app-navbar .user-actions {
+    gap: 5px;
+  }
+  .app-navbar .btn-nav {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  /* Tablas: compactar espaciados y fuentes */
+  .turnos-table-container {
+    margin: 10px auto;
+    padding: 0.25rem 0.5rem;
+  }
+  .turnos-table-header,
+  .turno-row {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.9rem;
+  }
+
+  /* Formularios: reducir márgenes y ajustar fuentes */
+  .add-turno {
+    padding: 0 0.5rem;
+  }
+  .form-control,
+  .form-select {
+    font-size: 0.9rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .form-label {
+    margin-bottom: 0.25rem;
+    font-size: 0.9rem;
+  }
+}
