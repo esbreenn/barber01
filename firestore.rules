@@ -16,19 +16,19 @@ service cloud.firestore {
 
       // Turnos subcollection per user
       match /turnos/{turnoId} {
-        allow read, write: if request.auth != null &&
+        allow read, create, update, delete: if request.auth != null &&
           (request.auth.uid == userId || request.auth.token.role == 'admin');
       }
 
       // Ventas de productos subcollection per user
       match /ventasProductos/{ventaId} {
-        allow read, write: if request.auth != null &&
+        allow read, create, update, delete: if request.auth != null &&
           (request.auth.uid == userId || request.auth.token.role == 'admin');
       }
 
       // Services subcollection per user
       match /services/{serviceId} {
-        allow read, write: if request.auth != null &&
+        allow read, create, update, delete: if request.auth != null &&
           (request.auth.uid == userId || request.auth.token.role == 'admin');
       }
     }
