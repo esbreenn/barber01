@@ -38,8 +38,8 @@ function Login() {
 
   return (
     <div className="container mt-5 d-flex justify-content-center">
-      <div className="card theme-card p-4 shadow" style={{ maxWidth: '400px', width: '100%' }}>
-        <h2 className="card-title text-center mb-4">Iniciar Sesión</h2>
+      <div className="theme-card p-4 shadow" style={{ maxWidth: '400px', width: '100%' }}>
+        <h2 className="text-center mb-4">Iniciar Sesión</h2>
         <form onSubmit={handleLogin}>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Email</label>

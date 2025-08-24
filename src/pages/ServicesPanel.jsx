@@ -84,7 +84,7 @@ function ServicesPanel() {
 
       <h3 className="mt-5 mb-3">Mis Servicios</h3>
       {services.length === 0 ? (
-        <p>No hay servicios.</p>
+        <p className="text-secondary">No hay servicios.</p>
       ) : (
         <ul className="theme-list">
           {services.map((svc) => (
