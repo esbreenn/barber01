@@ -18,7 +18,7 @@ function TurnoCard({ turno, onDelete, onEdit }) {
           type="button"
           aria-label="Editar turno"
           onClick={() => onEdit(id)}
-          className="btn btn-sm btn-edit"
+          className="btn btn-action btn-edit"
         >
           <FaEdit />
         </button>
@@ -26,7 +26,7 @@ function TurnoCard({ turno, onDelete, onEdit }) {
           type="button"
           aria-label="Eliminar turno"
           onClick={() => onDelete(id)}
-          className="btn btn-sm btn-delete"
+          className="btn btn-action btn-delete"
         >
           <FaTrashAlt />
         </button>
