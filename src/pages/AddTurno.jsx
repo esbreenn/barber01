@@ -83,7 +83,7 @@ function AddTurno() {
   };
 
   return (
-    <div className="container mt-4" style={{ maxWidth: '600px' }}>
+    <div className="container mt-4 add-turno">
       <h2 className="mb-4">Nuevo Turno</h2>
       <TurnoForm
         turnoData={turno}
