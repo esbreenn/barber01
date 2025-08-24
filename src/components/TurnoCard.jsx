@@ -4,14 +4,14 @@ import React from 'react';
 import { FaEdit, FaTrashAlt } from 'react-icons/fa';
 
 function TurnoCard({ turno, onDelete, onEdit }) {
-  const { id, nombre, hora, servicio } = turno; // Mantenemos servicio aquí por si lo usamos en el 'title'
+  const { id, nombre, hora, servicio } = turno;
 
   return (
     <div className="turno-row">
       <div className="col-hora">{hora}</div>
-      {/* Añadimos un 'title' para poder ver el servicio al pasar el ratón */}
-      <div className="col-nombre" title={`Servicio: ${servicio || 'N/A'}`}>
-        {nombre}
+      <div className="col-nombre">
+        <span className="turno-nombre">{nombre}</span>
+        <small className="turno-servicio">{servicio || 'N/A'}</small>
       </div>
       <div className="col-acciones">
         <button

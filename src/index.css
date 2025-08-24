@@ -233,9 +233,20 @@ body {
   flex: 1; /* Ocupa todo el espacio sobrante */
   min-width: 0;
   padding: 0 15px;
+  overflow: hidden;
+}
+
+.col-nombre .turno-nombre {
+  display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.col-nombre .turno-servicio {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
 }
 .col-acciones {
   flex: 0 0 110px; /* Ancho fijo para los botones */
