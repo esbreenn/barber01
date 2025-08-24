@@ -3,38 +3,38 @@
 @import 'react-day-picker/dist/style.css'; /* Estilos del calendario */
 /* 1. Variables de Tema y Estilos Globales */
 :root {
-  --color-background: #121212;
-  --color-surface: #222;
-  --color-primary: #007bff; /* Color primario azul de Bootstrap */
-  --color-primary-hover: #0056b3;
-  --color-info: #17a2b8;
-  --color-danger: #dc3545;
-  --color-success: #28a745; /* Añadimos color para el botón de Finanzas */
-  --color-warning: #ffc107;
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-info: #0ea5e9;
+  --color-danger: #ef4444;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
   --color-text-primary: #f8f9fa;
   --color-text-secondary: #bbb;
   --color-border: #444;
   --color-text-on-accent: #fff;
   --color-text-dark: #212529;
-  --color-primary-rgb: 0, 123, 255;
+  --color-primary-rgb: 59, 130, 246;
   --color-backdrop: rgba(0, 0, 0, 0.5);
 }
 
 :root[data-theme="light"] {
-  --color-background: #f8f9fa;
-  --color-surface: #fff;
-  --color-primary: #007bff;
-  --color-primary-hover: #0056b3;
-  --color-info: #17a2b8;
-  --color-danger: #dc3545;
-  --color-success: #28a745;
-  --color-warning: #ffc107;
+  --color-background: #faf3e0;
+  --color-surface: #fff7e6;
+  --color-primary: #b45309;
+  --color-primary-hover: #92400e;
+  --color-info: #2563eb;
+  --color-danger: #dc2626;
+  --color-success: #15803d;
+  --color-warning: #ca8a04;
   --color-text-primary: #212529;
   --color-text-secondary: #555;
   --color-border: #ccc;
   --color-text-on-accent: #fff;
   --color-text-dark: #212529;
-  --color-primary-rgb: 0, 123, 255;
+  --color-primary-rgb: 180, 83, 9;
   --color-backdrop: rgba(0, 0, 0, 0.5);
 }
 
