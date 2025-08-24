@@ -47,7 +47,7 @@ function Clients() {
         const telefono = turnos[0].telefono;
         return (
           <div className="theme-card mb-4" key={nombre}>
-            <div className="card-header">
+            <div className="p-3" style={{ borderBottom: '1px solid var(--color-border)' }}>
               <strong>{nombre}</strong>
               {telefono && <span className="ms-2">- {telefono}</span>}
             </div>
@@ -58,7 +58,7 @@ function Clients() {
                     <span>{t.fecha} {t.hora}</span>
                     <span>{t.servicio} - {formatCurrency(t.precio)}</span>
                   </div>
-                  {t.notas && <small className="text-muted d-block">{t.notas}</small>}
+                  {t.notas && <small className="text-secondary d-block">{t.notas}</small>}
                 </li>
               ))}
             </ul>
