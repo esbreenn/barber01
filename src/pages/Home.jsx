@@ -121,25 +121,24 @@ function Home() {
     setConfirmState({ show: true, id });
   };
 
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     const { id } = confirmState;
     if (notificationTimeouts.current[id]) {
       clearTimeout(notificationTimeouts.current[id]);
       delete notificationTimeouts.current[id];
     }
     setConfirmState({ show: false, id: null });
-    toast.promise(deleteTurno(id), {
-      loading: 'Eliminando turno...',
-      success: 'Turno eliminado con éxito',
-      error: (err) => {
-        console.error("Error al eliminar:", err);
-        if (err.message === 'No authenticated user') {
-          navigate('/login');
-          return 'Sesión expirada';
-        }
-        return 'No se pudo eliminar el turno.';
+    const toastId = toast.loading('Eliminando turno...');
+    try {
+      await deleteTurno(id);
+      toast.success('Turno eliminado con éxito', { id: toastId });
+    } catch (err) {
+      console.error("Error al eliminar:", err);
+      if (err.message === 'No authenticated user') {
+        navigate('/login');
       }
-    });
+      toast.error(err.code || err.message || 'No se pudo eliminar el turno.', { id: toastId });
+    }
   };
 
   const cancelDelete = () => {
