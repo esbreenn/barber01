@@ -7,14 +7,12 @@ import CalendarView from "../components/CalendarView";
 import TurnoList from "../components/TurnoList";
 import toast from 'react-hot-toast';
 import { formatCurrency } from "../utils/formatCurrency";
-import ConfirmDialog from "../components/ConfirmDialog";
 import LoadingSpinner from "../components/LoadingSpinner";
 
 function Home() {
   const [allTurnos, setAllTurnos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(new Date()); // selectedDate por defecto es la fecha actual
-  const [confirmState, setConfirmState] = useState({ show: false, id: null });
   const navigate = useNavigate();
   const notificationTimeouts = useRef({});
 
@@ -117,17 +115,13 @@ function Home() {
     }
   };
 
-  const handleDelete = (id) => {
-    setConfirmState({ show: true, id });
-  };
-
-  const confirmDelete = async () => {
-    const { id } = confirmState;
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm('¿Estás seguro de que quieres eliminar este turno?');
+    if (!confirmed) return;
     if (notificationTimeouts.current[id]) {
       clearTimeout(notificationTimeouts.current[id]);
       delete notificationTimeouts.current[id];
     }
-    setConfirmState({ show: false, id: null });
     const toastId = toast.loading('Eliminando turno...');
     try {
       await deleteTurno(id);
@@ -139,10 +133,6 @@ function Home() {
       }
       toast.error(err.code || err.message || 'No se pudo eliminar el turno.', { id: toastId });
     }
-  };
-
-  const cancelDelete = () => {
-    setConfirmState({ show: false, id: null });
   };
 
   const handleEdit = (id) => {
@@ -178,14 +168,6 @@ function Home() {
         turnos={filteredTurnos}
         onEdit={handleEdit}
         onDelete={handleDelete}
-      />
-      <ConfirmDialog
-        show={confirmState.show}
-        message="¿Estás seguro de que quieres eliminar este turno?"
-        onConfirm={confirmDelete}
-        onCancel={cancelDelete}
-        confirmText="Eliminar"
-        cancelText="Cancelar"
       />
     </div>
   );
