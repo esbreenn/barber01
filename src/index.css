@@ -107,7 +107,7 @@ body {
 .form-control {
   background-color: var(--color-surface);
   color: var(--color-text-primary);
-  border-color: var(--color-border); 
+  border-color: var(--color-border);
 }
 .form-control:focus {
   background-color: var(--color-surface);
@@ -116,6 +116,21 @@ body {
   box-shadow: 0 0 0 0.25rem rgba(var(--color-primary-rgb), 0.25);
 }
 .calendar-container { display: flex; justify-content: center; margin-bottom: 25px; }
+
+/* Contenedor del formulario de nuevo turno */
+.add-turno {
+  max-width: 100%;
+}
+@media (min-width: 576px) {
+  .add-turno {
+    max-width: 500px;
+  }
+}
+@media (min-width: 768px) {
+  .add-turno {
+    max-width: 600px;
+  }
+}
 
 /* 3. Sistema de Botones */
 .btn { 
