@@ -167,6 +167,7 @@ body {
 .btn-edit:hover { color: var(--color-text-on-accent); background-color: var(--color-edit); border-color: var(--color-edit); }
 .btn-delete { color: var(--color-delete); border-color: var(--color-delete); }
 .btn-delete:hover { color: var(--color-text-on-accent); background-color: var(--color-delete); border-color: var(--color-delete); }
+.btn-action { padding: 0.75rem; font-size: 1.25rem; }
 .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; border-radius: 0.2rem; }
 
 /* Botones de navegación unificados */
