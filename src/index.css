@@ -9,6 +9,8 @@
   --color-primary-hover: #2563eb;
   --color-info: #0ea5e9;
   --color-danger: #ef4444;
+  --color-edit: #0ea5e9;
+  --color-delete: #ef4444;
   --color-success: #10b981;
   --color-warning: #f59e0b;
   --color-text-primary: #f8f9fa;
@@ -27,6 +29,8 @@
   --color-primary-hover: #92400e;
   --color-info: #2563eb;
   --color-danger: #dc2626;
+  --color-edit: #2563eb;
+  --color-delete: #dc2626;
   --color-success: #15803d;
   --color-warning: #ca8a04;
   --color-text-primary: #212529;
@@ -144,6 +148,10 @@ body {
 .btn-outline-success:hover { color: var(--color-text-on-accent); background-color: var(--color-success); border-color: var(--color-success); } /* NUEVO: Botón de éxito hover */
 .btn-outline-warning { color: var(--color-warning); border-color: var(--color-warning); }
 .btn-outline-warning:hover { color: var(--color-text-dark); background-color: var(--color-warning); border-color: var(--color-warning); }
+.btn-edit { color: var(--color-edit); border-color: var(--color-edit); }
+.btn-edit:hover { color: var(--color-text-on-accent); background-color: var(--color-edit); border-color: var(--color-edit); }
+.btn-delete { color: var(--color-delete); border-color: var(--color-delete); }
+.btn-delete:hover { color: var(--color-text-on-accent); background-color: var(--color-delete); border-color: var(--color-delete); }
 .btn-sm { padding: 0.25rem 0.5rem; font-size: 0.875rem; border-radius: 0.2rem; }
 
 /* Botones de navegación unificados */
