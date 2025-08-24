@@ -95,13 +95,13 @@ function ServicesPanel() {
               <span>{svc.nombre} - {formatCurrency(svc.precio)}</span>
               <div>
                 <button
-                  className="btn btn-sm btn-warning me-2"
+                  className="btn btn-sm btn-edit me-2"
                   onClick={() => handleEdit(svc)}
                 >
                   Editar
                 </button>
                 <button
-                  className="btn btn-sm btn-danger"
+                  className="btn btn-sm btn-delete"
                   onClick={() => handleDelete(svc.id)}
                 >
                   Eliminar
